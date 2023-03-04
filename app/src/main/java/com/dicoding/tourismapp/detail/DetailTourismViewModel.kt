@@ -1,13 +1,18 @@
 package com.dicoding.tourismapp.detail
 
 import androidx.lifecycle.ViewModel
-import com.dicoding.tourismapp.core.data.TourismRepository
+import androidx.lifecycle.viewModelScope
 import com.dicoding.tourismapp.core.domain.model.Tourism
 import com.dicoding.tourismapp.core.domain.usecase.TourismUseCase
+import kotlinx.coroutines.launch
 
 class DetailTourismViewModel(
     private val tourismUseCase: TourismUseCase
 ) : ViewModel() {
-    fun setFavoriteTourism(tourism: Tourism, newStatus:Boolean) = tourismUseCase.setFavoriteTourism(tourism, newStatus)
+    fun setFavoriteTourism(tourism: Tourism, newStatus: Boolean) {
+        viewModelScope.launch {
+            tourismUseCase.setFavoriteTourism(tourism, newStatus)
+        }
+    }
 }
 

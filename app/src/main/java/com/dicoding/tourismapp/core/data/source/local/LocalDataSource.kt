@@ -1,6 +1,5 @@
 package com.dicoding.tourismapp.core.data.source.local
 
-import androidx.lifecycle.LiveData
 import com.dicoding.tourismapp.core.data.source.local.entity.TourismEntity
 import com.dicoding.tourismapp.core.data.source.local.room.TourismDao
 
@@ -15,13 +14,13 @@ class LocalDataSource private constructor(private val tourismDao: TourismDao) {
             }
     }
 
-    fun getAllTourism(): LiveData<List<TourismEntity>> = tourismDao.getAllTourism()
+    fun getAllTourism() = tourismDao.getAllTourism()
 
-    fun getFavoriteTourism(): LiveData<List<TourismEntity>> = tourismDao.getFavoriteTourism()
+    fun getFavoriteTourism() = tourismDao.getFavoriteTourism()
 
-    fun insertTourism(tourismList: List<TourismEntity>) = tourismDao.insertTourism(tourismList)
+    suspend fun insertTourism(tourismList: List<TourismEntity>) = tourismDao.insertTourism(tourismList)
 
-    fun setFavoriteTourism(tourism: TourismEntity, newState: Boolean) {
+    suspend fun setFavoriteTourism(tourism: TourismEntity, newState: Boolean) {
         tourism.isFavorite = newState
         tourismDao.updateFavoriteTourism(tourism)
     }
