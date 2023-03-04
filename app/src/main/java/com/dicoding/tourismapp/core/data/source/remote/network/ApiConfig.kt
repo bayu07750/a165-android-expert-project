@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit
 
 object ApiConfig {
 
-    private fun provideOkHttpClient(): OkHttpClient {
+    fun provideOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .connectTimeout(120, TimeUnit.SECONDS)
@@ -16,11 +16,11 @@ object ApiConfig {
             .build()
     }
 
-    fun provideApiService(): ApiService {
+    fun provideApiService(client: OkHttpClient): ApiService {
         val retrofit = Retrofit.Builder()
             .baseUrl("https://tourism-api.dicoding.dev/")
             .addConverterFactory(GsonConverterFactory.create())
-            .client(provideOkHttpClient())
+            .client(client)
             .build()
         return retrofit.create(ApiService::class.java)
     }

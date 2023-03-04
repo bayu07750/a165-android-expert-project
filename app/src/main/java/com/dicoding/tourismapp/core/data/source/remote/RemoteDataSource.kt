@@ -10,19 +10,9 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
-class RemoteDataSource private constructor(
+class RemoteDataSource(
     private val apiService: ApiService,
 ) {
-    companion object {
-        @Volatile
-        private var instance: RemoteDataSource? = null
-
-        fun getInstance(apiService: ApiService): RemoteDataSource =
-            instance ?: synchronized(this) {
-                instance ?: RemoteDataSource(apiService)
-            }
-    }
-
     fun getAllTourism(): Flow<ApiResponse<List<TourismResponse>>> = flow {
         val response = apiService.getList()
         val places = response.places
